@@ -1,0 +1,11 @@
+model\Board.class
+model\BoardInterface.class
+model\Game.class
+view\ConnectFourViewInterface.class
+controller\ConnectFourController.class
+model\InvalidPlayerException.class
+main\ConnectFourMain.class
+model\Player.class
+model\GameInterface.class
+view\ConnectFourView.class
+model\InvalidColumnException.class
