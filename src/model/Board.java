@@ -188,14 +188,12 @@ public class Board implements BoardInterface{
 		}
 		
 		//Check if X straight vertical or diagonal >>> X defined at the beginning of the game
-		for(int row = 0; row < _rowCount-_countToWin-1; row++)
+		for(int row = 0; row < _rowCount-_countToWin+1; row++)
 		{
-			//Check if X straight vertical 
-			for(int column = 0; column < _columnCount-_countToWin-1; column++)
+			for(int column = 0; column < _columnCount; column++)
 			{
 				int i = 1;
-				while (column+i<_columnCount && row+i<_rowCount && _board[row][column] != null 
-						&& _board[row][column] == _board[row+i][column])
+				while (_board[row][column] != null && _board[row][column] == _board[row+i][column])
 					i++;
 				
 				if( i > _countToWin - 1 )
