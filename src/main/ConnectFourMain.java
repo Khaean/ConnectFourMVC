@@ -28,6 +28,8 @@ public class ConnectFourMain {
 		controller.InitializeGame(game);
 		controller.InitializeView(view);
 		
-		controller.run();
+		Thread mainThread = new Thread(controller);
+		
+		mainThread.start();
 	}
 }
