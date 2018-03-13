@@ -51,12 +51,12 @@ public class BoardTest {
 		_board.dropDisc(0, _player1);
 		_board.dropDisc(1, _player1);
 
-		assertEquals(0,_board.checkWinner());
-		
-		_board.dropDisc(2, _player1);
+		assertFalse(_board.checkWinner(_player1.getPlayerNumber()));
+				
 		_board.dropDisc(3, _player1);
+		_board.dropDisc(2, _player1);
 		
-		assertEquals(1,_board.checkWinner());
+		assertTrue(_board.checkWinner(_player1.getPlayerNumber()));
 		
 		_board.dropDisc(0, _player1);
 	}
@@ -67,12 +67,12 @@ public class BoardTest {
 		_board.dropDisc(0, _player1);
 		_board.dropDisc(0, _player1);
 
-		assertEquals(0,_board.checkWinner());
+		assertFalse(_board.checkWinner(_player1.getPlayerNumber()));
 		
 		_board.dropDisc(0, _player1);
 		_board.dropDisc(0, _player1);
 		
-		assertEquals(1,_board.checkWinner());
+		assertTrue(_board.checkWinner(_player1.getPlayerNumber()));
 		
 		_board.dropDisc(0, _player1);
 	}
@@ -86,7 +86,7 @@ public class BoardTest {
 		_board.dropDisc(2, _player2);
 		_board.dropDisc(2, _player2);
 
-		assertEquals(0,_board.checkWinner());
+		assertFalse(_board.checkWinner(_player1.getPlayerNumber()));
 		
 		_board.dropDisc(2, _player1);
 		_board.dropDisc(3, _player2);
@@ -94,7 +94,7 @@ public class BoardTest {
 		_board.dropDisc(3, _player2);
 		_board.dropDisc(3, _player1);
 		
-		assertEquals(1,_board.checkWinner());
+		assertTrue(_board.checkWinner(_player1.getPlayerNumber()));
 		
 		_board.dropDisc(0, _player1);
 	}
@@ -108,7 +108,7 @@ public class BoardTest {
 		_board.dropDisc(1, _player2);
 		_board.dropDisc(1, _player2);
 
-		assertEquals(0,_board.checkWinner());
+		assertFalse(_board.checkWinner(_player1.getPlayerNumber()));
 		
 		_board.dropDisc(1, _player1);
 		_board.dropDisc(0, _player2);
@@ -116,7 +116,7 @@ public class BoardTest {
 		_board.dropDisc(0, _player2);
 		_board.dropDisc(0, _player1);
 		
-		assertEquals(1,_board.checkWinner());
+		assertTrue(_board.checkWinner(_player1.getPlayerNumber()));
 		
 		_board.dropDisc(0, _player1);
 	}

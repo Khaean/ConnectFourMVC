@@ -6,6 +6,6 @@ public interface BoardInterface {
 	public void dropDisc(int column, Player player);
 	public boolean boardIsfull();
 	public boolean columnIsFull(int column);
-	public int checkWinner();
+	public boolean checkWinner( int player );
 	
 }

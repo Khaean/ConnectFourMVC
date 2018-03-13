@@ -24,6 +24,8 @@ public class Board implements BoardInterface{
 	
 	// Store the row of the last added position
 	private Map<Integer,Integer> _lastPosition;
+	private int _lastRow;
+	private int _lastColumn;
 	
 	/**
 	 * Default constructor using default parameter
@@ -97,11 +99,17 @@ public class Board implements BoardInterface{
 				_columnFull.add(column);
 			
 			_lastPosition.put(column, row+1);
+			
+			_lastColumn = column;
+			_lastRow = row+1;
 		}
 		else
 		{
 			_board[row][column] = player.getPlayerNumber();
 			_lastPosition.put(column, 0);
+			
+			_lastColumn = column;
+			_lastRow = 0;
 		}
 	}
 	
@@ -165,67 +173,46 @@ public class Board implements BoardInterface{
 	}
 	
 	/**
-	 * Check if there is any winner in the game
-	 * if return 0, no winner
+	 * Check if there is the player won in the game
 	 * 
-	 * @return int winner number
+	 * @return boolean winner number
 	 */
 	@Override
-	public int checkWinner() {
-		//Check if X straight horizontal
-		for(int row = 0; row < _rowCount; row++)
-		{
-			for(int column = 0; column < _columnCount-_countToWin-1; column++)
-			{
-				int i = 1;
-				while (column+i<_columnCount && row+i<_rowCount && _board[row][column] != null 
-						&& _board[row][column] == _board[row][column+i])
-					i++;
-				
-				if( i > _countToWin - 1 )
-					return _board[row][column];
-			}
-		}
+	public boolean checkWinner( int player) {
 		
-		//Check if X straight vertical or diagonal >>> X defined at the beginning of the game
-		for(int row = 0; row < _rowCount-_countToWin+1; row++)
-		{
-			for(int column = 0; column < _columnCount; column++)
-			{
-				int i = 1;
-				while (_board[row][column] != null && _board[row][column] == _board[row+i][column])
-					i++;
-				
-				if( i > _countToWin - 1 )
-					return _board[row][column];
-			}
-			
-			//Check if X straight diagonal  bottom left
-			for(int column = 0; column < _columnCount-_countToWin-1; column++)
-			{
-				int i = 1;
-				while (column+i<_columnCount && row+i<_rowCount && _board[row][column] != null 
-						&& _board[row][column] == _board[row+i][column+i])
-					i++;
-				
-				if( i > _countToWin - 1 )
-					return _board[row][column];
-			}
-			
-			//Check if X straight diagonal bottom right
-			for(int column = _countToWin-1; column < _columnCount; column++)
-			{
-				int i = 1;
-				while (column-i>=0 && row+i<_rowCount && _board[row][column] != null 
-						&& _board[row][column] == _board[row+i][column-i])
-					i++;
-				 
-				if( i > _countToWin - 1 )
-					return _board[row][column];
-			}
-		}
-		 
-		return new Integer(0);
+		int row = _lastRow;
+		int col = _lastColumn;
+		return didWin(player, row, col, -1, 0) ||
+				didWin(player, row, col, 0, -1) ||
+                didWin(player, row, col, -1, -1) ||
+                didWin(player, row, col, 1, -1);
+	}
+	
+	private boolean didWin(int player, int row, int col, int rowDelta, int colDelta) {
+	    
+		int matches = 0;
+	    int i = 0;
+	    int iRow = row-rowDelta*_countToWin;
+	    int iCol=col-colDelta*_countToWin;
+
+	    while(i <= 2*_countToWin) 
+	    {    	
+	    	if(iRow < _rowCount-1 && iRow >= 0 && iCol < _columnCount-1 && iCol >= 0)
+	    	{
+	    		if ( matches >= _countToWin)
+	    			break;
+		        else if ( _board[iRow][iCol] == null || _board[iRow][iCol] != player )
+		        	matches = 0;
+	    		else if ( _board[iRow][iCol] == player )
+		            matches++;
+	    	}
+	    	
+	    	iRow += rowDelta;
+	    	iCol += colDelta;
+	    	i++;
+	    }
+	    
+	    return matches >= _countToWin;
 	}
 	
 	

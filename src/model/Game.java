@@ -42,6 +42,7 @@ public class Game implements GameInterface{
 	 */
 	public void newGame() {
 		_board.reset();
+		_isWinner = 0;
 	}
 		
 	/**
@@ -63,7 +64,9 @@ public class Game implements GameInterface{
 			throw new InvalidColumnException();
 		}
 
-		_isWinner = _board.checkWinner();
+		if (_board.checkWinner(_currentPlayer.getPlayerNumber()))
+			_isWinner = _currentPlayer.getPlayerNumber();
+			
 		setNextPlayer();
 	}
 	

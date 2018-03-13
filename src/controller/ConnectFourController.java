@@ -88,7 +88,7 @@ public class ConnectFourController implements Runnable{
 			_view.printBoard();
 			//Check if there is any winner or if board is full
 			//If not continue the game
-			while( !_game.getBoard().boardIsfull() && _game.getBoard().checkWinner()==0 )
+			while( !_game.getBoard().boardIsfull() && _game.getWinner()==0 )
 			{
 				int column = requestInput(_game.getCurrentPlayer());
 				
@@ -123,7 +123,7 @@ public class ConnectFourController implements Runnable{
 			if (_scan.next().equalsIgnoreCase("y") )
 			{
 				moreGame = true;
-				_game.newGame();;
+				_game.newGame();
 			}
 		}
 	}
