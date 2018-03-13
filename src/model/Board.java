@@ -180,35 +180,33 @@ public class Board implements BoardInterface{
 	@Override
 	public boolean checkWinner( int player) {
 		
-		int row = _lastRow;
-		int col = _lastColumn;
-		return didWin(player, row, col, -1, 0) ||
-				didWin(player, row, col, 0, -1) ||
-                didWin(player, row, col, -1, -1) ||
-                didWin(player, row, col, 1, -1);
+		return didWin(player, -1, 0) ||
+				didWin(player, 0, -1) ||
+                didWin(player, -1, -1) ||
+                didWin(player, 1, -1);
 	}
 	
-	private boolean didWin(int player, int row, int col, int rowDelta, int colDelta) {
+	private boolean didWin(int player, int rowDir, int colDir) {
 	    
 		int matches = 0;
 	    int i = 0;
-	    int iRow = row-rowDelta*_countToWin;
-	    int iCol=col-colDelta*_countToWin;
+	    int row = _lastRow-rowDir*_countToWin;
+	    int col=_lastColumn-colDir*_countToWin;
 
 	    while(i <= 2*_countToWin) 
 	    {    	
-	    	if(iRow < _rowCount-1 && iRow >= 0 && iCol < _columnCount-1 && iCol >= 0)
+	    	if(row < _rowCount-1 && row >= 0 && col < _columnCount-1 && col >= 0)
 	    	{
 	    		if ( matches >= _countToWin)
 	    			break;
-		        else if ( _board[iRow][iCol] == null || _board[iRow][iCol] != player )
+		        else if ( _board[row][col] == null || _board[row][col] != player )
 		        	matches = 0;
-	    		else if ( _board[iRow][iCol] == player )
+	    		else if ( _board[row][col] == player )
 		            matches++;
 	    	}
 	    	
-	    	iRow += rowDelta;
-	    	iCol += colDelta;
+	    	row += rowDir;
+	    	col += colDir;
 	    	i++;
 	    }
 	    
